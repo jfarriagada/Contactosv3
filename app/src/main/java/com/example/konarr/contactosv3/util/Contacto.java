@@ -1,12 +1,33 @@
 package com.example.konarr.contactosv3.util;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.io.Serializable;
 
-/**
- * Created by konarr on 28-09-14.
- */
+/* Created by konarr on 28-09-14.*/
+
+@DatabaseTable(tableName = "contacto")
 public class Contacto implements Serializable{
-    private String nombre, telefono, email, direccion, imageUri;
+    @DatabaseField(generatedId = true)
+    private int id;
+    @DatabaseField(index = true, canBeNull = false)
+    private String nombre;
+    @DatabaseField //nombre por defecto "telefono"
+    private String telefono;
+    @DatabaseField
+    private String email;
+    @DatabaseField
+    private String direccion;
+    @DatabaseField
+    private String imageUri;
+
+    /*El motor de ORMlite requiere este constructor vacio para poder instanciar objetos de esta clase
+    por medio de la API Reflection*/
+
+    public Contacto() {
+
+    }
 
     public Contacto(String nombre, String telefono, String email, String direccion, String imageUri) {
         this.nombre = nombre;
@@ -17,6 +38,11 @@ public class Contacto implements Serializable{
     }
 
     //<editor-fold desc="GETTERS">
+
+    public int getId() {
+        return id;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -61,6 +87,7 @@ public class Contacto implements Serializable{
     //</editor-fold>
 
 
+    //<editor-fold desc="Equals & hasCode">
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,4 +113,5 @@ public class Contacto implements Serializable{
         result = 31 * result + imageUri.hashCode();
         return result;
     }
+    //</editor-fold>
 }
